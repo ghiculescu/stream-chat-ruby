@@ -3,7 +3,7 @@ require 'stream-chat'
 
 describe StreamChat::Channel do
   before(:all) do
-    @client = StreamChat::Client.new(ENV['STREAM_CHAT_API_KEY'], ENV['STREAM_CHAT_API_SECRET'])
+    @client = StreamChat::Client.new(ENV['STREAM_CHAT_API_KEY'], ENV['STREAM_CHAT_API_SECRET'], {base_url: ENV['STREAM_CHAT_API_HOST']})
   end
 
   before(:each) do
@@ -130,6 +130,11 @@ describe StreamChat::Channel do
   it 'can send image' do 
     response = @channel.send_image(__dir__ + "/data/helloworld.jpg", @random_user, "image/jpeg")
     expect(response).to have_key("file")
+  end
+  
+  it 'hides\shows channel for user' do
+    @channel.hide(@random_user[:id])
+    @channel.show(@random_user[:id])
   end
 end
 

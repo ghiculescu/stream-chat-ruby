@@ -122,6 +122,14 @@ module StreamChat
     def send_image(url, user, content_type = nil)
       @client.send_file("#{self.url}/image", url, user, content_type)
     end
+    
+    def hide(user_id)
+      @client.post("#{url}/hide", data: {user_id: user_id})
+    end
+
+    def show(user_id)
+      @client.post("#{url}/show", data: {user_id: user_id})
+    end
 
     private
 
