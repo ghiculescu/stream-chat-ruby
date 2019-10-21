@@ -115,6 +115,14 @@ module StreamChat
       @client.unban_user(user_id, type: @channel_type, id: @id)
     end
 
+    def send_file(url, user, content_type = nil)
+      @client.send_file("#{self.url}/file", url, user, content_type)
+    end
+
+    def send_image(url, user, content_type = nil)
+      @client.send_file("#{self.url}/image", url, user, content_type)
+    end
+
     private
 
     def add_user_id(payload, user_id)

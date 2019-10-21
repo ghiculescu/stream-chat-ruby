@@ -3,7 +3,7 @@ require 'stream-chat'
 
 describe StreamChat::Channel do
   before(:all) do
-    @client = StreamChat::Client.new(ENV['STREAM_API_KEY'], ENV['STREAM_API_SECRET'])
+    @client = StreamChat::Client.new(ENV['STREAM_CHAT_API_KEY'], ENV['STREAM_CHAT_API_SECRET'])
   end
 
   before(:each) do
@@ -120,6 +120,16 @@ describe StreamChat::Channel do
     response = @channel.get_reactions(msg['message']['id'], offset: 1)
     expect(response['reactions'].length).to eq 1
     expect(response['reactions'][0]['count']).to eq 42
+  end
+
+  it 'can send file' do
+    response = @channel.send_file(__dir__ + "/data/helloworld.txt", @random_user, "text/plain")
+    expect(response).to have_key("file")
+  end
+
+  it 'can send image' do 
+    response = @channel.send_image(__dir__ + "/data/helloworld.jpg", @random_user, "image/jpeg")
+    expect(response).to have_key("file")
   end
 end
 
